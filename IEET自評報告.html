@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEET 認證自評報告書 - 完整目錄暨雲端佐證導覽</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #0284c7;
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --border-light: #f1f5f9;
+      --badge-bg: #eff6ff;
+      --badge-border: #bfdbfe;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 32px 16px;
+    }
+
+    .main-wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    /* 頂部標頭 */
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
+      color: white;
+      padding: 36px 40px;
+      position: relative;
+    }
+    .header-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(4px);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    /* 控制列與搜尋器 */
+    .control-panel {
+      padding: 16px 40px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      border: 1px solid var(--border-color);
+      background: #fff;
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      background: #f1f5f9;
+      color: var(--primary);
+    }
+    .filter-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .search-input-box {
+      flex: 1 1 280px;
+      max-width: 380px;
+      position: relative;
+    }
+    .search-input-box input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 13.5px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .search-input-box input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* 雲端主目錄提示列 */
+    .root-hint {
+      margin: 16px 40px 0;
+      padding: 10px 16px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .root-hint a {
+      color: #15803d;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    /* 目錄清單 */
+    .toc-tree {
+      list-style: none;
+      padding: 16px 40px 40px;
+    }
+    .toc-node {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .toc-node:hover {
+      background-color: #f1f5f9;
+    }
+
+    /* 階層排版設定 */
+    .level-root {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #1e3a8a;
+      background: #f8fafc;
+      margin-top: 24px;
+      border-left: 4px solid var(--primary);
+      padding: 10px 14px;
+    }
+    .level-program {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      background: #eff6ff;
+      margin-top: 28px;
+      border-bottom: 2px solid #bfdbfe;
+      padding: 10px 14px;
+    }
+    .level-norm {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 14px;
+      padding-left: 14px;
+      border-left: 3px solid #cbd5e1;
+    }
+    .level-item {
+      font-size: 13.5px;
+      font-weight: 500;
+      padding-left: 28px;
+      color: #334155;
+    }
+    .level-subitem {
+      font-size: 13px;
+      padding-left: 44px;
+      color: #475569;
+    }
+    .level-subsubitem {
+      font-size: 12.5px;
+      padding-left: 60px;
+      color: #64748b;
+    }
+
+    /* 標題與圖示 */
+    .node-title-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+    .node-title-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .node-title-link:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    /* 頁碼與直達標籤 */
+    .node-meta-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+    .badge-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .badge-subfolder {
+      background: var(--badge-bg);
+      color: var(--primary-hover);
+      border: 1px solid var(--badge-border);
+    }
+    .badge-subfolder:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .badge-root {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid #e2e8f0;
+    }
+    .badge-root:hover {
+      background: #e2e8f0;
+      color: var(--text-secondary);
+    }
+
+    .node-page {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 48px;
+      text-align: right;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border-color);
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+  <header>
+    <div class="header-tag">IEET CAC 資訊教育認證自評報告書</div>
+    <h1>資訊網路工程系 自評報告目錄暨佐證快速導覽系統</h1>
+    <p>嚴格按照自評報告書目錄章節與頁碼編排，支援一鍵直達 Google Drive 子目錄佐證資料夾。</p>
+  </header>
+
+  <div class="control-panel">
+    <div class="filter-tabs">
+      <button class="filter-btn active" data-filter="all">全部目錄</button>
+      <button class="filter-btn" data-filter="day">【四技班】</button>
+      <button class="filter-btn" data-filter="night">【進修部四技班】</button>
+      <button class="filter-btn" data-filter="master">【碩士班】</button>
+    </div>
+    <div class="search-input-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="輸入關鍵字或頁碼（如：Capstone、退學、表4-1）...">
+    </div>
+  </div>
+
+  <div class="root-hint">
+    <span>📁 本報告書雲端根目錄：<strong>2026-IEET自評報告書-外</strong></span>
+    <a href="https://drive.google.com/drive/folders/1wAlI0dPGDcQsDGE_Uk2W_QBZwoWQoFPu" target="_blank" rel="noopener">開啟雲端總目錄 ↗</a>
+  </div>
+
+  <ul class="toc-tree" id="tocTree">
+    <!-- 目錄將由 JavaScript 依據原始文字精確產生 -->
+  </ul>
+
+  <footer>
+    資訊網路工程系 IEET 認證推動小組 • 109-114 學年度自評報告導覽系統
+  </footer>
+</div>
+
+<script>
+  // 1. Google 雲端主目錄
+  const ROOT_URL = "https://drive.google.com/drive/folders/1wAlI0dPGDcQsDGE_Uk2W_QBZwoWQoFPu";
+
+  // 2. 依據您提供的實際資料夾路徑，精準匹配之專屬子目錄對照庫
+  const FOLDER_MAP = {
+    // 【四技日間部】
+    "day_crit1": "https://drive.google.com/drive/folders/1fGOF8FAdO8kNrEZvFUf5YrK2oPgAPyBG", // 規範1
+    "day_crit1_eval": "https://drive.google.com/drive/folders/1snrgl-eCu-JRKLktT9LfyYdoOAhg7eRc", // 評估達成文件
+    "day_crit1_meet": "https://drive.google.com/drive/folders/1uU3m9spd8gItyfsGAwXvTQCrXujvwBgd", // 檢討會議紀錄
+    "day_crit1_promo": "https://drive.google.com/drive/folders/1ZhsPpSUlobRdW6m-mRqChSk6LS9ljTio", // 宣導品文件
+    
+    "day_crit2": "https://drive.google.com/drive/folders/1np9AVdfuftKovFbpiybTgOQ-AIgyi35t", // 規範2
+    "day_crit2_career": "https://drive.google.com/drive/folders/1laPUOALlMg3p606TiaJpmSmwbCng2dV2", // 升學就業輔導
+    "day_crit2_grad": "https://drive.google.com/drive/folders/1UTaBu073mhVvhepfv0hl8t0sR6sFwuvp", // 畢業規定辦法
+    "day_crit2_award": "https://drive.google.com/drive/folders/1dGfYlZ0W256vpwOdn-4AucH_70xuNSHr", // 獎助績優/清寒
+    "day_crit2_club": "https://drive.google.com/drive/folders/1h7mw2U9MRbupa6pK7oSOEcM2UHBDezei", // 社團/研討會
+    "day_crit2_trans": "https://drive.google.com/drive/folders/1L7aeAvZL3sJxnBny_0VYBWh2LiGLYVOj", // 轉入生輔導
+    "day_crit2_leave": "https://drive.google.com/drive/folders/1IjgU_ABePyQ3nPMEuk4xboryxBdt7kKW", // 休退學預警
+    "day_crit2_adm": "https://drive.google.com/drive/folders/1Wo6OU4T8HBtDK7EtCbE5rZjedAvzl58a", // 入學招生辦法
+    "day_crit2_inter": "https://drive.google.com/drive/folders/1BPyCpjlupLqdNGVkeiXso4rTE6bOeXFO", // 跨領域學程
+    
+    "day_crit3": "https://drive.google.com/drive/folders/1AuhiHGJVGAJU7L-TXGnF77RSoRf0vvVb", // 規範3
+    "day_crit3_survey": "https://drive.google.com/drive/folders/1idV3GVuAAn_qxh0v7bRwdkoW1eG5Rvlb", // 畢業生問卷
+    "day_crit3_coremeet": "https://drive.google.com/drive/folders/1-FH6XWl40nhNWYxxAKC1hmF4kBM11VXc", // 核心能力修訂紀錄
+    "day_crit3_capstone": "https://drive.google.com/drive/folders/1Fl8M4Vx7vXNt0yTtzY6cg9bfZr1VTs0X", // Capstone評量資料
+    
+    "day_crit4": "https://drive.google.com/drive/folders/1HQucPhE4pio6r3G-_kJ0SdCzrXdO3cRx", // 規範4
+    "day_crit4_capstone_works": "https://drive.google.com/drive/folders/1TYHfT0JRP5m0EXnNPSNKunynJC0olM4N", // 專題實作成果
+    "day_crit4_req": "https://drive.google.com/drive/folders/1Nx00QIKxDnOHYhJ9bFaahbf9tFtvWNFX", // 必修專業課
+    "day_crit4_ind": "https://drive.google.com/drive/folders/1zZQfXvAeaucp9ZWSdhXHzYkUl5EDsrOr", // 業界參訪體驗
+    "day_crit4_intern": "https://drive.google.com/drive/folders/1PCI5x-gCgC8aEnmifEy-sYLr2XbYy-2T", // 學生實習紀錄
+    "day_crit4_map": "https://drive.google.com/drive/folders/1k_RFaBkmSCc7qKxi9XDJV9kP4bATjnrq", // 課程地圖
+    "day_crit4_transcripts": "https://drive.google.com/drive/folders/11zrrzDW2WnlOVK10nAPpVf40sRF9QFzS", // 6份成績單分析
+    
+    "day_crit5": "https://drive.google.com/drive/folders/1z-PTQRUiOZ7Y8CMBIJytM4KskVR34mnN", // 規範5
+    "day_crit5_edu": "https://drive.google.com/drive/folders/1T1W-cyqsxjkn0sJBzfugpuzj4Qsj38-z", // 教師參與教育目標
+    "day_crit5_ind": "https://drive.google.com/drive/folders/1L-mFvgCFKXGtT7nHT6g6nIN0B5Y5h9DQ", // 產學合作紀錄
+    "day_crit5_hire": "https://drive.google.com/drive/folders/1gUs0fUX9pziO0MV6JCA4bERMlNzUCkdi", // 聘任升等教評會
+    "day_crit5_org": "https://drive.google.com/drive/folders/1zo0ybf-kROdt2uSROlGBJT5U9n9jBuv0", // 參與專業組織辦法
+    "day_crit5_growth": "https://drive.google.com/drive/folders/1jkxT23Qs_KzW8n2HpiuDB-kPdL9s7Tt9", // 研習進修措施
+    "day_crit5_mentor": "https://drive.google.com/drive/folders/1RYERYlm_PlV_VIj2qTGjwjck-mQBzOVB", // 課輔導生紀錄
+    "day_crit5_hours": "https://drive.google.com/drive/folders/15flC2hbjZGoVEosc0i_GkTr0jgOVaPiB", // 授課鐘點名冊
+    
+    "day_crit6": "https://drive.google.com/drive/folders/1yCnT10uLF7rH4-HwCCVquZyaa085s0IZ", // 規範6
+    "day_crit6_plan": "https://drive.google.com/drive/folders/1oBp9dgc7dZ2aYlHAH6Krvxd98v59KVQ4", // 空間規劃紀錄
+    "day_crit6_eq": "https://drive.google.com/drive/folders/1B2xzyTiXqmYMm-E73sel-2jLFV-r54ty", // 設備清單及管理
+    "day_crit6_manual": "https://drive.google.com/drive/folders/1kE16MCr6bObA_PVZ5rHu-GkKqbYIJXXt", // 實驗手冊/安全講義
+    "day_crit6_safe": "https://drive.google.com/drive/folders/1Z5Ze_pY7IF02p27s176SaPkCuCFrqyPk", // 環安衛講習紀錄
+    
+    "day_crit7": "https://drive.google.com/drive/folders/1v4BrXVuIHCmzNF80F9V9VILuWA8Zq0vC", // 規範7
+    "day_crit7_growth": "https://drive.google.com/drive/folders/1o22sPuAc_s79Md2IWCcX_DGnwAgiI3KG", // 師生專業成長經費
+    "day_crit7_chair": "https://drive.google.com/drive/folders/1LVverPoLapmAkYk_gNc8XnYqmoj76OXh", // 主任遴選會議
+    "day_crit7_eqfunds": "https://drive.google.com/drive/folders/1IKtkDogrW5D4SoDmlkkROLoBR3kg4_hH", // 設備經費分配
+    "day_crit7_staff": "https://drive.google.com/drive/folders/18Ap5rf20-aromRrMVtOa4Ifpi9EELS_t", // 行政技術人力
+    
+    "day_crit8": "https://drive.google.com/drive/folders/1xSADDWZZsPgil5jQxetcF7ENs4nmsIH_", // 規範8
+    "day_crit8_out": "https://drive.google.com/drive/folders/1QInqiNGWznRN2SFmUsfvIY80w8fBSaTA", // 外迴圈諮詢會議
+    "day_crit8_in": "https://drive.google.com/drive/folders/1GKg65Rt4NpxKLx15fOnHuxzWnRCB_b1m", // 內迴圈系務會議
+
+    // 【進修部四技班】
+    "night_crit1": "https://drive.google.com/drive/folders/1drhWMyVbf9efDFv7n1xhjzoITRDv00UG", // 規範1
+    "night_crit1_meet": "https://drive.google.com/drive/folders/1xhSnawTPceB9rNNBExSKxafN_x3bweSP", // 檢討會議紀錄
+    "night_crit1_eval": "https://drive.google.com/drive/folders/1O5UEpV972fHigTY6dIlIDKvGO5EHnqPt", // 評估文件
+    "night_crit1_promo": "https://drive.google.com/drive/folders/1kRyj0HP2L5EuKlTxT2IwO2B-tEo3o69d", // 宣傳資料
+    
+    "night_crit3": "https://drive.google.com/drive/folders/1Up6_MW80QtxBC-BT2nw51X6f0llGu7Sm", // 規範3
+    "night_crit3_coremeet": "https://drive.google.com/drive/folders/15u2Cm3fSzB0_bYiid0mminV_-6T2XIO3", // 核心能力修訂
+    "night_crit3_capstone": "https://drive.google.com/drive/folders/1OhyDC-HQC_5VfUcIEP0XVHoqljhFDkys", // Capstone評量
+    "night_crit3_survey": "https://drive.google.com/drive/folders/1qs30IEO3rpp1ej5suFKTS2oARfxX-_dC", // 畢業生問卷
+    
+    "night_crit4": "https://drive.google.com/drive/folders/1HAHlqUXl1MMJi4dQ-boxNXF_WuSqa0og", // 規範4
+    "night_crit4_intern": "https://drive.google.com/drive/folders/1LViqTRYIrLA_HN9czzDwUEg40XmZbU44", // 實習紀錄
+    "night_crit4_capstone_works": "https://drive.google.com/drive/folders/109aW9Co8I2_UwXHo58AIlQMR_WKznpnf", // 創意專題作品群
+    "night_crit4_req": "https://drive.google.com/drive/folders/1OUEWlqGu9GfTAh3U76WK7G7GqipiHB_J", // 必修專業資料夾
+    "night_crit4_transcripts": "https://drive.google.com/drive/folders/14VkZryourDCQdoYYWMz6fh7hI7eT1eYs", // 6份成績單
+
+    // 【碩士班】
+    "master_g0": "https://drive.google.com/drive/folders/14UNWj9hacLQtDrZr4I2X4eMcjtNh1F9O", // G.0招生學位
+    "master_g1": "https://drive.google.com/drive/folders/1Vyn7nEq3g2SgsRzd1bOZUE43mZLgadRK", // G.1教育目標
+    "master_g1_meet": "https://drive.google.com/drive/folders/1gpu97BxD3JAUxI0AMTEqm2SCu8QLrzfa", // 檢討會議紀錄
+    "master_g2": "https://drive.google.com/drive/folders/1AuIhrXTJqYg2oU7qh0ZduRlDi_8HORDs", // G.2學生
+    "master_g2_award": "https://drive.google.com/drive/folders/15zODUaSVFmjoS88bwjAuB-3RdcckN0Jr", // 獎助清寒
+    "master_g2_inter": "https://drive.google.com/drive/folders/1fQ8q8uf3oBP-XbgNWfE0MhDyEePdjiZQ", // 研討會/實習
+    "master_g2_career": "https://drive.google.com/drive/folders/1MXQ867_PGhFyxUYky3c8h2USDH9X5z4S", // 畢業就業輔導
+    "master_g2_leave": "https://drive.google.com/drive/folders/1s7BEEWwt5eIXZoY_mGmIpnxJBy5EiLWo", // 休退學預警
+    "master_g3": "https://drive.google.com/drive/folders/1b-LNYVneTPzDwiF2yyLobnWHAytshzqP", // G.3核心能力
+    "master_g3_survey": "https://drive.google.com/drive/folders/1Xa15Jzw0ciNqEKCEEzABKYM6ok7sN7Ij", // 畢業生問卷
+    "master_g3_thesis": "https://drive.google.com/drive/folders/112_9xZYdWBImcDLmkUrTzOaOPfnhzzbY", // 畢業生論文
+    "master_g4": "https://drive.google.com/drive/folders/1tHdfkm3CnXhJdJH0bSXM2nsu4ew-KrhZ", // G.4課程
+    "master_g4_req": "https://drive.google.com/drive/folders/1aLZ4K-SJPjqTtNzWJ0U4wUz0GS29Gi3P", // 必修課程/口試成績
+    "master_g5": "https://drive.google.com/drive/folders/1kX7Nhxi8iyAp72WGlZfa1DLDsqqo8xwG", // G.5教師
+    "master_g6": "https://drive.google.com/drive/folders/1rzI69pGrBCYvYDhoNXdBEmkhNwg4lESC", // G.6設備空間
+    "master_g7": "https://drive.google.com/drive/folders/1weCSSjMDQy4TJUvk4cbwiw6n5W54ABxE", // G.7行政經費
+    "master_g8": "https://drive.google.com/drive/folders/12Uhy8w7Jcyd6VcyFNx8nx8rgNQKwMPR8"  // G.8持續改善
+  };
+
+  // 3. 原始目錄結構陣列
+  const tocList = [
+    { title: "壹、受認證系所基本資料", page: "1", level: "level-root", group: "all", key: null },
+    { title: "貳、認證內容", page: "2", level: "level-root", group: "all", key: null },
+    
+    // ===== 【四技班】 =====
+    { title: "【四技班】", page: "2", level: "level-program", group: "day", key: null },
+    { title: "認證規範1：教育目標", page: "2", level: "level-norm", group: "day", key: "day_crit1" },
+    { title: "1.1 須具備明確且公開的教育目標，展現學程的功能及特色，且符合時代潮流及社會需求。", page: "3", level: "level-item", group: "day", key: "day_crit1_promo" },
+    { title: "1.2 須說明教育目標與學校願景或教育目標的關聯性及形成的流程。", page: "4", level: "level-item", group: "day", key: "day_crit1_meet" },
+    { title: "1.2.1 校、院、系教育目標之關聯性", page: "4", level: "level-subitem", group: "day", key: "day_crit1" },
+    { title: "1.2.2 教育目標之制訂與修訂機制", page: "4", level: "level-subitem", group: "day", key: "day_crit1_meet" },
+    { title: "1.3 須具備有效的評量方式以確保教育目標的達成。", page: "5", level: "level-item", group: "day", key: "day_crit1_eval" },
+    { title: "1.3.1 評量對象與週期", page: "5", level: "level-subitem", group: "day", key: "day_crit1_eval" },
+    { title: "1.3.2 評量指標與工具", page: "5", level: "level-subitem", group: "day", key: "day_crit1_eval" },
+    { title: "1.3.3 評量結果分析", page: "5", level: "level-subitem", group: "day", key: "day_crit1_eval" },
+    { title: "1.3.4 持續改善措施", page: "5", level: "level-subitem", group: "day", key: "day_crit1_meet" },
+    { title: "表1-1 109-114學年度學校願景/宗旨、學院教育目標與學程教育目標對照表", page: "6", level: "level-subitem", group: "day", key: "day_crit1" },
+    { title: "表1-2 109-114學年度訂定/修訂教育目標流程暨歷程紀錄表", page: "6", level: "level-subitem", group: "day", key: "day_crit1_meet" },
+    { title: "表1-3 109-114學年度評量教育目標方式及結果", page: "8", level: "level-subitem", group: "day", key: "day_crit1_eval" },
+
+    { title: "認證規範2：學生", page: "12", level: "level-norm", group: "day", key: "day_crit2" },
+    { title: "2.1 須訂定並有效執行配合達成教育目標合理可行的規章。", page: "12", level: "level-item", group: "day", key: "day_crit2_adm" },
+    { title: "2.1.1 輔導學生入學、休學、退學、轉學、畢業及就業規定或辦法", page: "12", level: "level-subitem", group: "day", key: "day_crit2_leave" },
+    { title: "2.1.2 追蹤學生休學、退學、轉學、畢業及就業", page: "12", level: "level-subitem", group: "day", key: "day_crit2_leave" },
+    { title: "2.2 須訂定並有效執行鼓勵學生交流與學習的措施及辦法。", page: "13", level: "level-item", group: "day", key: "day_crit2_club" },
+    { title: "2.2.1 跨院（系）整合性學程", page: "13", level: "level-subitem", group: "day", key: "day_crit2_inter" },
+    { title: "2.2.2 校外業界參訪", page: "14", level: "level-subitem", group: "day", key: "day_crit4_ind" },
+    { title: "2.2.3 社團活動", page: "15", level: "level-subitem", group: "day", key: "day_crit2_club" },
+    { title: "2.2.4 考取證照", page: "15", level: "level-subitem", group: "day", key: "day_crit4_req" },
+    { title: "2.2.5 校內外競賽及發明展", page: "16", level: "level-subitem", group: "day", key: "day_crit2_club" },
+    { title: "2.2.6 校外實習", page: "16", level: "level-subitem", group: "day", key: "day_crit4_intern" },
+    { title: "2.3 須持續並有效執行學生輔導機制及成效評量。", page: "17", level: "level-item", group: "day", key: "day_crit2_career" },
+    { title: "2.3.1 學生休/退學輔導", page: "17", level: "level-subitem", group: "day", key: "day_crit2_leave" },
+    { title: "2.3.2 課業輔導", page: "17", level: "level-subitem", group: "day", key: "day_crit5_mentor" },
+    { title: "2.3.3 生活輔導", page: "18", level: "level-subitem", group: "day", key: "day_crit5_mentor" },
+    { title: "2.3.4 職涯輔導", page: "19", level: "level-subitem", group: "day", key: "day_crit2_career" },
+    { title: "2.3.5 獎助學金", page: "19", level: "level-subitem", group: "day", key: "day_crit2_award" },
+    { title: "表2-1 109-114學年度在學生和畢業生統計", page: "21", level: "level-subitem", group: "day", key: "day_crit2" },
+    { title: "表2-2 109-114學年度轉學生背景統計分析 (A.人數 / B.輔導機制)", page: "24", level: "level-subitem", group: "day", key: "day_crit2_trans" },
+    { title: "表2-3 109-114學年度休學生統計【四技班】", page: "25", level: "level-subitem", group: "day", key: "day_crit2_leave" },
+    { title: "表2-3 109-114學年度休學生統計【進修部四技班】", page: "32", level: "level-subitem", group: "night", key: "night_crit1" },
+    { title: "表2-4 109-114學年度退學生統計及相關辦法及機制", page: "33", level: "level-subitem", group: "day", key: "day_crit2_leave" },
+    { title: "表2-5 109-114學年度鼓勵學生交流、成長與學習之措施與執行成效", page: "38", level: "level-subitem", group: "day", key: "day_crit2_club" },
+
+    { title: "認證規範3：畢業生核心能力", page: "40", level: "level-norm", group: "day", key: "day_crit3" },
+    { title: "3.1 畢業生核心能力能涵蓋IEET規範3核心能力。", page: "40", level: "level-item", group: "day", key: "day_crit3_coremeet" },
+    { title: "3.2 畢業生核心能力與教育目標的關聯性。", page: "41", level: "level-item", group: "day", key: "day_crit3" },
+    { title: "3.3 透過Capstone課程及畢業生問卷調查評量畢業生核心能力之結果。", page: "42", level: "level-item", group: "day", key: "day_crit3_capstone" },
+    { title: "表3-1 109-114學年度畢業生核心能力與IEET規範3核心能力關聯表", page: "43", level: "level-subitem", group: "day", key: "day_crit3" },
+    { title: "表3-2 109-114學年度學程畢業生核心能力與教育目標關聯表", page: "45", level: "level-subitem", group: "day", key: "day_crit3" },
+    { title: "表3-3 109-114學年度整合性專題實作課程（Capstone）評量達成度 (109-114全班評量與尺規)", page: "46-52", level: "level-subitem", group: "day", key: "day_crit3_capstone" },
+    { title: "Rubrics（評量尺規）表", page: "52", level: "level-subsubitem", group: "day", key: "day_crit3_capstone" },
+    { title: "表3-4 109-114學年度畢業生問卷調查畢業生核心能力之達成度 (含滿意度與離校問卷)", page: "53-57", level: "level-subitem", group: "day", key: "day_crit3_survey" },
+
+    { title: "認證規範4：課程及教學", page: "58", level: "level-norm", group: "day", key: "day_crit4" },
+    { title: "4.1 課程設計及內容須與教育目標一致（數學≥9學分、專業≥3/8、通識均衡）", page: "58", level: "level-item", group: "day", key: "day_crit4" },
+    { title: "4.2 課程及教學須符合產業需求，並能反思及改善，以確保學生核心能力的培育。", page: "59", level: "level-item", group: "day", key: "day_crit4_ind" },
+    { title: "表4-1 109-114學年度課程地圖(無擋修)", page: "60", level: "level-subitem", group: "day", key: "day_crit4_map" },
+    { title: "表4-2 109-114學年度實際開課清單以及課程與畢業生核心能力關聯表", page: "61", level: "level-subitem", group: "day", key: "day_crit4_req" },
+    { title: "表4-3 111-114學年度永續發展課程統計及設計", page: "63", level: "level-subitem", group: "day", key: "day_crit4_req" },
+    { title: "表4-4 ~ 表4-6 Capstone課程大綱、確認清單、反思表", page: "65-68", level: "level-subitem", group: "day", key: "day_crit4_capstone_works" },
+    { title: "表4-7 109-114學年度整合性專題實作課程(Capstone)成果清單", page: "69", level: "level-subitem", group: "day", key: "day_crit4_capstone_works" },
+    { title: "表4-8 114學年度畢業生成績單（學分數）分析表 (高中低樣本末三位001/026/045)", page: "85-91", level: "level-subitem", group: "day", key: "day_crit4_transcripts" },
+
+    { title: "認證規範5：教師", page: "94", level: "level-norm", group: "day", key: "day_crit5" },
+    { title: "5.1 ~ 5.7 教師人數、專長、輔導、業界交流、成長措施與學術活動", page: "94-95", level: "level-item", group: "day", key: "day_crit5" },
+    { title: "表5-1 109-114學年度教師專業分析表 (A.學程主管 / B.學程教師)", page: "96", level: "level-subitem", group: "day", key: "day_crit5_hire" },
+    { title: "表5-2 109-114學年度教師工作量統計", page: "104", level: "level-subitem", group: "day", key: "day_crit5_hours" },
+    { title: "表5-3 109-114年度全體專任教師計畫案件數及經費統計", page: "105", level: "level-subitem", group: "day", key: "day_crit5_ind" },
+    { title: "表5-4 112-114年度參與義務輔導教師統計", page: "105", level: "level-subitem", group: "day", key: "day_crit5_mentor" },
+    { title: "表5-5 114年度參與證照/競賽輔導教師統計", page: "106", level: "level-subitem", group: "day", key: "day_crit5_growth" },
+
+    { title: "認證規範6：設備及空間", page: "107", level: "level-norm", group: "day", key: "day_crit6" },
+    { title: "6.1 營造有利師生互動環境 (圖6-1~6-2 系館3樓/7樓平面圖)", page: "107-108", level: "level-item", group: "day", key: "day_crit6_plan" },
+    { title: "6.2 提供足夠專業設備設施 (網路/微處理機/軟體/AI物聯/研究雲端)", page: "109-114", level: "level-item", group: "day", key: "day_crit6_eq" },
+    { title: "6.3 具備安全空間、設備維護及管理制度", page: "115", level: "level-item", group: "day", key: "day_crit6_safe" },
+    { title: "表6-1 109-114學年度實驗/實習場所空間及設備資料表", page: "115", level: "level-subitem", group: "day", key: "day_crit6_eq" },
+
+    { title: "認證規範7：行政支援人力及經費", page: "135", level: "level-norm", group: "day", key: "day_crit7" },
+    { title: "7.1 ~ 7.4 行政領導、專業成長經費、技術人力與儀器維運經費", page: "135-137", level: "level-item", group: "day", key: "day_crit7" },
+    { title: "表7-1 109-114年度行政及技術人力", page: "137", level: "level-subitem", group: "day", key: "day_crit7_staff" },
+    { title: "表7-2 109-114年度經費", page: "139", level: "level-subitem", group: "day", key: "day_crit7_growth" },
+
+    { title: "認證規範8：持續改善", page: "140", level: "level-norm", group: "day", key: "day_crit8" },
+    { title: "8.1 須具備持續改善機制 / 8.2 說明持續改善成效", page: "140-141", level: "level-item", group: "day", key: "day_crit8" },
+    { title: "表8-1 109-114學年度系教育認證諮詢委員會成員名單及會議紀錄", page: "141", level: "level-subitem", group: "day", key: "day_crit8_out" },
+    { title: "表8-2 針對前次至本次週期性審查認證團所提建議之持續改善成效", page: "143", level: "level-subitem", group: "day", key: "day_crit8_in" },
+
+    // ===== 【進修部四技班】 =====
+    { title: "【進修部四技班】", page: "150", level: "level-program", group: "night", key: null },
+    { title: "認證規範1：教育目標（進修部）", page: "150", level: "level-norm", group: "night", key: "night_crit1" },
+    { title: "1.1 明確公開目標 / 1.2 目標關聯與形成流程 / 1.3 評量方式與持續改善", page: "150-152", level: "level-item", group: "night", key: "night_crit1_eval" },
+    { title: "表1-1 學校願景、學院與進修部學程教育目標對照表", page: "152", level: "level-subitem", group: "night", key: "night_crit1" },
+    { title: "表1-2 109-114學年度訂定/修訂教育目標流程暨歷程紀錄表", page: "153", level: "level-subitem", group: "night", key: "night_crit1_meet" },
+    { title: "表1-3 109-114學年度評量教育目標方式及結果", page: "156", level: "level-subitem", group: "night", key: "night_crit1_eval" },
+
+    { title: "認證規範3：應屆畢業生核心能力（進修部）", page: "159", level: "level-norm", group: "night", key: "night_crit3" },
+    { title: "3.1 核心能力涵蓋度 / 3.2 與教育目標關聯 / 3.3 Capstone與問卷評量", page: "159-160", level: "level-item", group: "night", key: "night_crit3_coremeet" },
+    { title: "表3-1 109-114學年度畢業生核心能力與IEET規範3關聯表", page: "160", level: "level-subitem", group: "night", key: "night_crit3" },
+    { title: "表3-2 109-114學年度學程核心能力與教育目標關聯表", page: "162", level: "level-subitem", group: "night", key: "night_crit3" },
+    { title: "表3-3 109-114學年度整合性專題實作（Capstone）評量達成度 (含尺規)", page: "163-169", level: "level-subitem", group: "night", key: "night_crit3_capstone" },
+    { title: "表3-4 112-114學年度畢業生問卷調查畢業生核心能力之達成度", page: "171", level: "level-subitem", group: "night", key: "night_crit3_survey" },
+
+    { title: "認證規範4：課程及教學（進修部）", page: "174", level: "level-norm", group: "night", key: "night_crit4" },
+    { title: "4.1 課程設計檢核（數學≥9、專業≥3/8、通識均衡） / 4.2 產業需求改善", page: "174-175", level: "level-item", group: "night", key: "night_crit4" },
+    { title: "表4-1 114學年度課程地圖(無擋修)", page: "176", level: "level-subitem", group: "night", key: "night_crit4" },
+    { title: "表4-2 109-114學年度實際開課清單以及課程與畢業生核心能力關聯表", page: "177", level: "level-subitem", group: "night", key: "night_crit4_req" },
+    { title: "表4-3 111-114學年度永續發展課程統計及設計", page: "179", level: "level-subitem", group: "night", key: "night_crit4_req" },
+    { title: "表4-4 ~ 表4-6 Capstone課程大綱、確認清單與反思表", page: "181-185", level: "level-subitem", group: "night", key: "night_crit4_capstone_works" },
+    { title: "表4-7 109-114學年度整合性專題實作課程（Capstone）成果清單 (創意專題)", page: "186", level: "level-subitem", group: "night", key: "night_crit4_capstone_works" },
+    { title: "表4-8 114學年度畢業生成績單分析表 (學號末三位：042/061/041)", page: "190-195", level: "level-subitem", group: "night", key: "night_crit4_transcripts" },
+
+    // ===== 【碩士班】 =====
+    { title: "【碩士班】", page: "197", level: "level-program", group: "master", key: null },
+    { title: "認證規範G：碩士班認證基本要求", page: "197", level: "level-norm", group: "master", key: "master_g0" },
+    { title: "G.0 須具有適當的入學評量方式 (修業年限、報名資格、錄取標準、五年一貫)", page: "197-198", level: "level-item", group: "master", key: "master_g0" },
+    { title: "G.1 符合規範1教育目標的要求", page: "199", level: "level-item", group: "master", key: "master_g1" },
+    { title: "表G.1-1 學校願景、學院與碩士班教育目標對照表", page: "200", level: "level-subitem", group: "master", key: "master_g1" },
+    { title: "表G.1-2 109-114學年度訂定/修訂教育目標流程暨歷程紀錄表", page: "201", level: "level-subitem", group: "master", key: "master_g1_meet" },
+    { title: "表G.1-3 111-114學年度評量教育目標方式及結果", page: "204", level: "level-subitem", group: "master", key: "master_g1" },
+
+    { title: "G.2 具備規範2學生的要求（強調研究生與指導教授互動）", page: "206", level: "level-item", group: "master", key: "master_g2" },
+    { title: "表G.2-1 109-114學年度碩士班在學生和畢業生統計", page: "206", level: "level-subitem", group: "master", key: "master_g2" },
+    { title: "表G.2-2 109-114學年度碩士班休學生統計", page: "207", level: "level-subitem", group: "master", key: "master_g2_leave" },
+    { title: "表G.2-3 109-114學年度碩士班退學生統計及預警機制執行紀錄", page: "214-220", level: "level-subitem", group: "master", key: "master_g2_leave" },
+    { title: "表G.2-4 114學年度鼓勵學生交流成長與學習措施成效", page: "221-222", level: "level-subitem", group: "master", key: "master_g2_inter" },
+
+    { title: "G.3 具備規範3核心能力與畢業論文要求", page: "223", level: "level-item", group: "master", key: "master_g3" },
+    { title: "G.3.1 核心能力涵蓋IEET規範G.3 (表G.3-1 核心能力關聯表)", page: "223-224", level: "level-subitem", group: "master", key: "master_g3" },
+    { title: "G.3.2 畢業生核心能力與教育目標關聯性 (表G.3-2 關聯表)", page: "226", level: "level-subitem", group: "master", key: "master_g3" },
+    { title: "G.3.3 畢業生問卷調查達成度 (表G.3-3 113-114學年度問卷)", page: "228-229", level: "level-subitem", group: "master", key: "master_g3_survey" },
+    { title: "表G.3-4 109-114學年度畢業生論文清單及論文主題專業相符機制", page: "230-235", level: "level-subitem", group: "master", key: "master_g3_thesis" },
+
+    { title: "G.4 須提供適當的課程規劃滿足專業發展需求", page: "236", level: "level-item", group: "master", key: "master_g4" },
+    { title: "表G.4-1 114學年度碩士班課程地圖(無擋修)", page: "236", level: "level-subitem", group: "master", key: "master_g4" },
+    { title: "表G.4-2 109-114學年度實際開課清單及核心能力關聯表", page: "237-241", level: "level-subitem", group: "master", key: "master_g4_req" },
+    { title: "表G.4-3 ~ 表G.4-4 114學年度核心專業課程大綱與反思表 (電腦圖學/書報/口試)", page: "242-244", level: "level-subitem", group: "master", key: "master_g4_req" },
+
+    { title: "G.5 具備規範5教師要求（重視學術實務研究與國內外活動）", page: "246", level: "level-item", group: "master", key: "master_g5" },
+    { title: "G.6 具備規範6設備及空間要求（滿足研究需要）", page: "249", level: "level-item", group: "master", key: "master_g6" },
+    { title: "G.7 具備規範7行政支援與經費要求", page: "250", level: "level-item", group: "master", key: "master_g7" },
+    { title: "G.8 符合規範8領域認證持續改善要求", page: "251", level: "level-item", group: "master", key: "master_g8" },
+    { title: "表8-1 針對前次認證團建議之持續改善成效（碩士班）", page: "251", level: "level-subitem", group: "master", key: "master_g8" }
+  ];
+
+  const tocTree = document.getElementById("tocTree");
+  const searchInput = document.getElementById("searchInput");
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  let activeFilter = "all";
+
+  function render(data) {
+    tocTree.innerHTML = "";
+    if (data.length === 0) {
+      tocTree.innerHTML = `<li style="text-align:center; padding: 48px; color:#94a3b8;">查無符合條件的章節條目</li>`;
+      return;
+    }
+
+    data.forEach(item => {
+      const li = document.createElement("li");
+      li.className = `toc-node ${item.level}`;
+
+      const targetUrl = (item.key && FOLDER_MAP[item.key]) ? FOLDER_MAP[item.key] : ROOT_URL;
+      const hasSpecificFolder = Boolean(item.key && FOLDER_MAP[item.key]);
+
+      li.innerHTML = `
+        <div class="node-title-box">
+          <a class="node-title-link" href="${targetUrl}" target="_blank" rel="noopener">
+            ${item.title}
+          </a>
+        </div>
+        <div class="node-meta-box">
+          <a class="badge-link ${hasSpecificFolder ? 'badge-subfolder' : 'badge-root'}" href="${targetUrl}" target="_blank" rel="noopener">
+            ${hasSpecificFolder ? '📂 直達子目錄' : '📁 主目錄'}
+          </a>
+          <span class="node-page">p.${item.page}</span>
+        </div>
+      `;
+      tocTree.appendChild(li);
+    });
+  }
+
+  function applyFilter() {
+    const keyword = searchInput.value.trim().toLowerCase();
+    const filtered = tocList.filter(item => {
+      const matchesGroup = (activeFilter === "all") || (item.group === "all") || (item.group === activeFilter);
+      const matchesKeyword = item.title.toLowerCase().includes(keyword) || item.page.includes(keyword);
+      return matchesGroup && matchesKeyword;
+    });
+    render(filtered);
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeFilter = btn.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  searchInput.addEventListener("input", applyFilter);
+
+  // 初始繪製
+  render(tocList);
+</script>
+
+</body>
+</html>
